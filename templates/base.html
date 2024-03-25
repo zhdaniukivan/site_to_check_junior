@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<ul>
+    <li><a href="{% url 'home' %}">Main page</a> </li>
+    {% for j in menu %}
+        {% if not forloop.last %}<li>{% else %}<li class="last">{% endif %}
+    <p><a href="{% url j.url_name %}">{{ j.title }}</a></p>
+    {% endfor %}
+</ul>
+
+
+{% block content %} {% endblock %}
+</body>
+</html>

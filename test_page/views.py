@@ -1,34 +1,54 @@
 from django.http import HttpResponse, HttpResponseNotFound, Http404, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.template.loader import  render_to_string
 
+
+menu = [
+    {'title': 'About site', 'url_name': 'about'},
+    {'title': 'Add article', 'url_name': 'addpage'},
+    {'title': 'Contacts', 'url_name': 'contacts'},
+    {'title': 'Sing in', 'url_name': 'sing-in'},
+]
+
+dada_db = [
+    {'id': 1, 'title': 'Анджелина Джойли', 'content': 'биография Анджелины Джойли', 'is_published': True},
+    {'id': 2, 'title': 'Марго Роби', 'content': 'биография Марго Роби', 'is_published': False},
+    {'id': 3, 'title': 'Джулия Робертс', 'content': 'биография Джулия Робертс', 'is_published': True},
+]
 
 # Create your views here.
 
-
 def index(request):
-    return HttpResponse('page test')
+    data = {
+        'title': 'main page',
+        'menu': menu,
+        'posts': dada_db,
+
+    }
+    return render(request, 'test_page/index.html', data)
 
 
-def categories(request, cat_id):
-    return HttpResponse(f"<h1>Test to Categories</h1><p>cat_id: {cat_id}</p>")
+def show_post(request, post_id):
+    return HttpResponse(f'<h1> This page is about post {post_id}')
 
 
-def categories_by_slug(request, cat_slug):
-    print(request.GET)
-    return HttpResponse(f"<h1>Test to Categories</h1><p>cat_slug: {cat_slug}</p>")
+def addpage(request):
+    return HttpResponse('addpage')
 
 
-def categories_by_year(request, year):
-    if year >2024:
-        raise Http404()
-    if year < 1850:
-        uri = reverse('cat_slug', args=('music', ))
-        return redirect(uri)
-    if year ==2008:
-        return HttpResponseRedirect('/')
-        # return redirect('test_page/', permanent=True)
-    return HttpResponse(f"<h1>Test to Categories</h1><p>year: {year}</p>")
+def contacts(request):
+    return HttpResponse('contacts')
+
+
+def sing_in(request):
+    return HttpResponse('sing-in')
+
+
+def about(request):
+    data = {'title': 'about page'}
+    return render(request, 'test_page/about.html', {'title': 'about page', 'menu': menu})
+
 
 
 def page_not_found(request, exception):

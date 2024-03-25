@@ -11,8 +11,8 @@ Class-based views
     1. Add an import:  from other_app.views import Home
     2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
 Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+    1. Import the includes() function: from django.urls import includes, path
+    2. Add a URL to urlpatterns:  path('blog/', includes('blog.urls'))
 """
 from django.contrib import admin
 from django.urls import path, re_path, register_converter
@@ -22,7 +22,9 @@ register_converter(converters.FourDigitYearConverter, 'year4')
 urlpatterns = [
 
     path('', views.index, name='home'),
-    path('cat/<int:cat_id>/', views.categories, name='cat_id'),
-    path('cat/<slug:cat_slug>/', views.categories_by_slug, name='cat_slug'),
-    path('archive/<year4:year>/', views.categories_by_year, name='archive')
+    path('about/', views.about, name='about'),
+    path('contacts/', views.contacts, name='contacts'),
+    path('addpage/', views.addpage, name='addpage'),
+    path('sing-in/', views.sing_in, name='sing-in'),
+    path('post/<int:post_id>/', views.show_post, name='post'),
 ]

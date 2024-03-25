@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<h1>{{ title }}</h1>
+
+{% include 'test_page/includes/nav.html' %}
+
+<ul>
+    {% for i in posts %}
+    {% if i.is_published %}
+    <li>
+
+        <h2>{{ i.title }}</h2>
+        <h3>{{ i.content }}</h3>
+<!--        <p><a href="{% url "post" i.id %}">continius riding</a></p>-->
+        <p><a href="{% url "post" i.id %}">continius riding</a></p>
+        {% if not forloop.last %}
+        <hr>
+        {% endif %}
+
+    </li>
+    {% endif %}
+    {% endfor %}
+</ul>
+{% include 'test_page/includes/nav.html' %}
+{% endblock %}
+
+
+
