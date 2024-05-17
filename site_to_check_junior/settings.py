@@ -38,8 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles', # подключает статические файлы
     'test_page',
-    'user_page',
-    'reqruter_page',
+    # 'user_page',
+    # 'reqruter_page',
 ]
 
 MIDDLEWARE = [

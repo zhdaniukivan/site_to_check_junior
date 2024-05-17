@@ -58,10 +58,6 @@ class Profile(models.Model):
 
 
 
-
-
-
-
 class Question(models.Model):
 
     class Status(models.TextChoices):

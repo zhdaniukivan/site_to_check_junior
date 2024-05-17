@@ -27,4 +27,5 @@ urlpatterns = [
     path('addpage/', views.addpage, name='addpage'),
     path('sing-in/', views.sing_in, name='sing-in'),
     path('post/<int:post_id>/', views.show_post, name='post'),
+    path('category/<int:cat_id>/', views.show_category, name='category'),
 ]
