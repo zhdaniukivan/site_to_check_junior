@@ -1,8 +1,9 @@
 from django.http import HttpResponse, HttpResponseNotFound, Http404, HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.template.loader import  render_to_string
 
+from test_page.models import Question
 
 menu = [
     {'title': 'About site', 'url_name': 'about'},
@@ -26,18 +27,28 @@ cats_db = [
 # Create your views here.
 
 def index(request):
+    post = Question.objects.all()
+    print(post)
     data = {
         'title': 'main page',
         'menu': menu,
-        'posts': dada_db,
+        'posts': post,
         'cat_selected': 0,
 
     }
     return render(request, 'test_page/index.html', data)
 
 
-def show_post(request, post_id):
-    return HttpResponse(f'<h1> This page is about post {post_id}')
+def show_post(request, post_slug):
+    post = get_object_or_404(Question, slug=post_slug)
+    data = {
+        'title': post.title,
+        'menu': menu,
+        'post': post,
+
+
+    }
+    return render(request, 'test_page/post.html', data)
 
 
 def addpage(request):

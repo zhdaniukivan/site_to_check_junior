@@ -1,4 +1,7 @@
+import datetime
+
 from django.db import models
+from django.urls import reverse
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
@@ -13,8 +16,8 @@ class Profile(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     location = models.CharField(max_length=30, blank=True)
-    birth_date = models.DateTimeField(null=True)
-    profile_creation_time = models.DateTimeField(default=timezone.now)
+    birth_date = models.DateTimeField(blank=True, null=True)
+    profile_creation_time = models.DateTimeField(auto_now_add=True)
     last_visit_time = models.DateTimeField(blank=True, null=True)
     gender = models.CharField(max_length=1, choices=Gender.choices, blank=True)
     avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
@@ -75,11 +78,11 @@ class Question(models.Model):
 
     language = models.CharField(max_length=30, choices=Language.choices)
     title = models.CharField(max_length=250)
-    slug = models.SlugField(max_length=250)
-    body = models.TextField()
-    publish = models.DateTimeField(default=timezone.now)
+    slug = models.SlugField(max_length=250, unique=True, db_index=True)
+    body = models.TextField(blank=True)
+    publish = models.DateTimeField(blank=True)
     created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
+    updated = models.DateTimeField(blank=True, null=True, default=12-12-2024)
     status = models.CharField(max_length=2, choices=Status.choices, default=Status.DRAFT)
     added_by_user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField()
@@ -87,6 +90,9 @@ class Question(models.Model):
 
     def __str__(self):
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('test_page', kwargs={'post_slug': self.slug} )
 
 class Contact(models.Model):
     user_from = models.ForeignKey(User, related_name='rel_from_set', on_delete=models.CASCADE)

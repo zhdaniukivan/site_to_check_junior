@@ -14,8 +14,7 @@
 
         <h2>{{ i.title }}</h2>
         <h3>{{ i.content }}</h3>
-<!--        <p><a href="{% url "post" i.id %}">continius riding</a></p>-->
-        <p><a href="{% url "post" i.id %}">continius riding</a></p>
+        <p><a href="{{ p.get_absolute_url }}">continius riding</a></p>
         {% if not forloop.last %}
         <hr>
         {% endif %}
